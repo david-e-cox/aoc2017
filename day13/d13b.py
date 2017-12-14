@@ -14,7 +14,7 @@ for line in data:
      depth[int(l)]=int(d)
 
 done=False
-delay=0
+delay=3700000
 # No need to check every layer, only ones with active scanners
 checkLanes = [i for i,val in enumerate(depth) if val > 0 ]
 
@@ -22,12 +22,11 @@ while not done:
      delay+=1
      hit=0
      for i in checkLanes:
-          if depth[i]>0:
-               # Check if at this depth the scanner will be at zero
-               # Its modulo a longer list(2N-2), going out and back
-               if ((delay+i)%(2*depth[i]-2)==0): 
-                    hit=1;
-                    continue
+          # Check if at this depth the scanner will be at zero
+          # Its modulo a longer list(2N-2), going out and back
+          if ((delay+i)%(2*depth[i]-2)==0): 
+               hit=1;
+               continue
      if (delay%10000)==0:
           print("Zero cost delay is more than {0:d}".format(delay))
 
